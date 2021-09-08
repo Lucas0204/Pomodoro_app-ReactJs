@@ -11,8 +11,6 @@ export const GlobalStyles = styled.div`
     background-color: #00ADd1;
 
     header {
-        /* border: 1px solid blue; */
-
         height: 14%;
 
         display: flex;
@@ -28,16 +26,38 @@ export const GlobalStyles = styled.div`
         height: 50%;
 
         margin-top: 4rem;
+        padding: 3.3rem;
 
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
 
         border-radius: 14px;
-        /* box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.2); */
 
         background-color: rgba(79, 182, 209);
+
+        .timer-period {
+            font-size: 1.4rem;
+
+            width: 42%;
+
+            display: flex;
+            justify-content: space-around;
+
+            color: white;
+
+            .period {
+                padding: .5rem 1rem;
+
+                border-radius: 10px;
+                background-color: rgba(59, 172, 200);
+            }
+
+            .currently {
+                background-color: rgba(40, 142, 174);
+            }
+        }
 
         .timer {
             font-size: 6.5rem;
@@ -51,7 +71,6 @@ export const GlobalStyles = styled.div`
 
             font-size: 1.6rem;
             font-weight: 400;
-            /* padding: 2rem; */
             background-color: white;
             color: #00ADd1;
 

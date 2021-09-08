@@ -1,4 +1,4 @@
-function startOrStopTimer(state = 'start', action) {
+function startOrStopTimer(state = 'stop', action) {
 
     switch (action.type) {
         case 'start':
