@@ -48,10 +48,18 @@ export const GlobalStyles = styled.div`
             color: white;
 
             .period {
+                font-size: 1.4rem;
                 padding: .5rem 1rem;
 
+                border: none;
                 border-radius: 10px;
                 background-color: rgba(59, 172, 200);
+            
+                color: white;
+
+                :hover {
+                    cursor: pointer;
+                }
             }
 
             .currently {
@@ -65,7 +73,7 @@ export const GlobalStyles = styled.div`
             color: white;
         }
 
-        button {
+        .startStopButton {
             width: 12rem;
             height: 3.5rem;
 

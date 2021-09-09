@@ -30,6 +30,6 @@ export default function StartStopButton() {
     }, [ startOrStopTimer ])
 
     return (
-        <button onClick={ verifyAction }>{buttonAction}</button>
+        <button onClick={ verifyAction } className="startStopButton">{buttonAction}</button>
     )
 }

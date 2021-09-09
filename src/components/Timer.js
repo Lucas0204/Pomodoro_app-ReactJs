@@ -1,15 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import StartStopButton from './StartStopButton'
-import { workAction, shortBreakAction, longBreakAction } from '../actions/periodActions'
+import { workAction, shortBreakAction } from '../actions/periodActions'
 import stopAction from '../actions/stopAction'
+
+import StartStopButton from './StartStopButton'
+import TimerHeader from './TimerHeader'
+
 
 export default function Timer() {
 
-    const twentyFiveMinutesInSeconds = 10
+    const workClock = 1500
+    const shortBreakClock = 300
 
-    const [ durationInSeconds, setDurationInSeconds ] = useState(twentyFiveMinutesInSeconds)
+    const [ durationInSeconds, setDurationInSeconds ] = useState(workClock)
     const [ intervalId, setIntervalId ] = useState()
     const [ timer, setTimer ] = useState('')
 
@@ -28,6 +32,7 @@ export default function Timer() {
 
     useEffect(() => {
         if (durationInSeconds === 0) {
+            emitAlert()
             dispatch(stopAction())
             changePeriod()
         }
@@ -40,6 +45,14 @@ export default function Timer() {
 
         setTimer(`${formatedMinutes}:${formatedSeconds}`)
     }, [ durationInSeconds ])
+
+    useEffect(() => {
+        if (periodOfTimer === 'work') {
+            setDurationInSeconds(workClock)
+        } else {
+            setDurationInSeconds(shortBreakClock)
+        }
+    }, [ periodOfTimer ])
 
     function startTimer() {  
         setIntervalId(setInterval(() => {
@@ -54,19 +67,19 @@ export default function Timer() {
     function changePeriod() {
         if (periodOfTimer === 'work') {
             dispatch(shortBreakAction())
-            setDurationInSeconds(20)
         } else {
             dispatch(workAction())
-            setDurationInSeconds(twentyFiveMinutesInSeconds)
         }
+    }
+
+    function emitAlert() {
+        const audio = new Audio('/alarm-sound.wav')
+        audio.play()
     }
 
     return (
         <main>
-            <div className="timer-period">
-                <div className={`period ${periodOfTimer === 'work' ? 'currently' : ''}`}>Work</div>
-                <div className={`period ${periodOfTimer === 'short_break' ? 'currently' : ''}`}>Break</div>
-            </div>
+            <TimerHeader />
             <div className="timer">
                 {timer}
             </div>
