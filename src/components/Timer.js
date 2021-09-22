@@ -9,9 +9,9 @@ import TimerHeader from './TimerHeader'
 
 
 export default function Timer() {
-    const workClock = 25
-    const shortBreakClock = 5
-    const longBreakClock = 15
+    const workClock = 1500
+    const shortBreakClock = 300
+    const longBreakClock = 900
 
     const [ durationInSeconds, setDurationInSeconds ] = useState(workClock)
     const [ intervalId, setIntervalId ] = useState()
