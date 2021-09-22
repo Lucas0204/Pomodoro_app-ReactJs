@@ -1,7 +1,7 @@
 import React from  'react'
 import { useSelector, useDispatch } from 'react-redux'
 import stopAction from '../actions/stopAction'
-import { workAction, shortBreakAction } from '../actions/periodActions'
+import { workAction, shortBreakAction, longBreakAction } from '../actions/periodActions'
 
 export default function TimerHeader() {
 
@@ -10,7 +10,9 @@ export default function TimerHeader() {
     const dispatch = useDispatch()
 
     function setPeriodAsWork() {
-        if (periodOfTimer !== 'work') {
+        const isWorkPeriod = periodOfTimer.split('_')[0] === 'work' ? true : false 
+
+        if (!isWorkPeriod) {
             dispatch(workAction())
             dispatch(stopAction())
         }
@@ -23,10 +25,18 @@ export default function TimerHeader() {
         }
     }
 
+    function setPeriodAsLongBreak() {
+        if (periodOfTimer !== 'long_break') {
+            dispatch(longBreakAction())
+            dispatch(stopAction())
+        }
+    }
+
     return (
         <div className="timer-period">
-            <button onClick={ setPeriodAsWork } className={`period ${periodOfTimer === 'work' ? 'currently' : ''}`}>Work</button>
-            <button onClick={ setPeriodAsShortBreak } className={`period ${periodOfTimer === 'short_break' ? 'currently' : ''}`}>Break</button>
+            <button onClick={ setPeriodAsWork } className={`period ${periodOfTimer.split('_')[0] === 'work' ? 'currently' : ''}`}>Work</button>
+            <button onClick={ setPeriodAsShortBreak } className={`period ${periodOfTimer === 'short_break' ? 'currently' : ''}`}>Short</button>
+            <button onClick={ setPeriodAsLongBreak } className={`period ${periodOfTimer === 'long_break' ? 'currently' : ''}`}>Long</button>
         </div>
     )
 }

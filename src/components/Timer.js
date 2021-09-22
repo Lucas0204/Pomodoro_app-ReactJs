@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { workAction, shortBreakAction } from '../actions/periodActions'
+import { workAction, shortBreakAction, longBreakAction } from '../actions/periodActions'
 import stopAction from '../actions/stopAction'
 
 import StartStopButton from './StartStopButton'
@@ -9,9 +9,9 @@ import TimerHeader from './TimerHeader'
 
 
 export default function Timer() {
-
-    const workClock = 1500
-    const shortBreakClock = 300
+    const workClock = 25
+    const shortBreakClock = 5
+    const longBreakClock = 15
 
     const [ durationInSeconds, setDurationInSeconds ] = useState(workClock)
     const [ intervalId, setIntervalId ] = useState()
@@ -47,10 +47,12 @@ export default function Timer() {
     }, [ durationInSeconds ])
 
     useEffect(() => {
-        if (periodOfTimer === 'work') {
+        if (periodOfTimer.split('_')[0] === 'work') {
             setDurationInSeconds(workClock)
-        } else {
+        } else if (periodOfTimer === 'short_break')
             setDurationInSeconds(shortBreakClock)
+        else {
+            setDurationInSeconds(longBreakClock)
         }
     }, [ periodOfTimer ])
 
@@ -65,9 +67,12 @@ export default function Timer() {
     }
 
     function changePeriod() {
-        if (periodOfTimer === 'work') {
+        if (periodOfTimer === 'work_1' || periodOfTimer === 'work_2' || periodOfTimer === 'work_3') {
             dispatch(shortBreakAction())
-        } else {
+        } else if (periodOfTimer === 'work_4') {
+            dispatch(longBreakAction())
+        }
+        else {
             dispatch(workAction())
         }
     }

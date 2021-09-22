@@ -1,5 +1,13 @@
+let count = 1
+
 function workAction() {
-    return { type: 'work' }
+    if (count === 4) {
+        count = 1
+        return { type: `work_${count}` }
+    }
+    
+    count += 1
+    return { type: `work_${count}` }
 }
 
 function shortBreakAction() {
